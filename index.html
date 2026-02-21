@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>FULLSCREEN AIRHORN</title>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: red;
+  }
+
+  #fullscreenButton {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    color: white;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    user-select: none;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="fullscreenButton" onclick="playSound()">
+  TAP HERE 🔊
+</div>
+
+<audio id="sound" src="airhorn.mp3"></audio>
+
+<script>
+function playSound() {
+  const audio = document.getElementById("sound");
+  audio.loop = true;
+  audio.currentTime = 0;
+  audio.play();
+}
+</script>
+
+</body>
+</html>
