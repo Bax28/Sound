@@ -1,0 +1,50 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Loop Sound</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+  }
+
+  button {
+    font-size: 50px;
+    padding: 80px 150px;
+    border-radius: 25px;
+    border: none;
+    background: red;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+  }
+</style>
+</head>
+
+<body>
+
+<button onclick="playSound()">🔊 START LOOP</button>
+
+<audio id="sound" src="airhorn.mp3"></audio>
+
+<script>
+function playSound() {
+  const audio = document.getElementById("sound");
+  audio.loop = true;     // Wiederholt dauerhaft
+  audio.currentTime = 0; // Startet von vorne
+  audio.play();
+}
+</script>
+
+</body>
+</html>
