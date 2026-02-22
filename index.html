@@ -26,15 +26,14 @@
   }
 </style>
 
-<!-- Socket.IO -->
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
 </head>
 
 <body>
 
-<div id="fullscreenButton" onclick="activateAudio()">
-  TAP HERE 🔊
+<div id="fullscreenButton" onclick="unlockAudio()">
+  TAP TO ACTIVATE 🔊
 </div>
 
 <audio id="sound" src="airhorn.mp3"></audio>
@@ -42,22 +41,22 @@
 <script>
 
 let socket;
-let audioEnabled = false;
+let audioUnlocked = false;
 const audio = document.getElementById("sound");
 
 // Wird beim ersten Tippen aktiviert (wichtig für iPhone)
-function activateAudio() {
-  audio.loop = true;
-  audio.currentTime = 0;
-  audio.play();
-  audioEnabled = true;
-
-  if (!socket) {
-    connectSocket();
+function unlockAudio() {
+  if (!audioUnlocked) {
+    audio.play().then(() => {
+      audio.pause();
+      audio.currentTime = 0;
+      audioUnlocked = true;
+      connectSocket();
+      document.getElementById("fullscreenButton").innerText = "READY 🚀";
+    });
   }
 }
 
-// Verbindung zum Render-Server
 function connectSocket() {
   socket = io("https://telegram-horn-remote.onrender.com");
 
@@ -66,14 +65,11 @@ function connectSocket() {
   });
 
   socket.on("horn_signal", () => {
-    if (audioEnabled) {
+    if (audioUnlocked) {
+      audio.loop = true;
       audio.currentTime = 0;
       audio.play();
     }
-  });
-
-  socket.on("disconnect", () => {
-    console.log("Verbindung getrennt");
   });
 }
 
